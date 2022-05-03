@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\CharaMove.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DebagDrawText.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FileOperation.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fps.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Load.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mesh.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModelShader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\polygon.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Title.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wavread.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\CharaMove.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DebagDrawText.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FileOperation.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fps.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Load.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Main.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mesh.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModelShader.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\polygon.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Title.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wavread.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sound.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\ModelShader.fx" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,18 @@
+﻿  Main.cpp
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Mesh.h(15): warning C4091: 'static ': 変数が何も宣言されていないときは、'Mesh::XFILE' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Mesh.h(20): warning C4091: 'static ': 変数が何も宣言されていないときは、'Mesh::CLONEVERTEX' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\CharaMove.h(53): warning C4091: 'static ': 変数が何も宣言されていないときは、'CharaMove::CLONEVERTEX' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Load.h(13): warning C4091: 'static ': 変数が何も宣言されていないときは、'Load::XFILE' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Load.h(18): warning C4091: 'static ': 変数が何も宣言されていないときは、'Load::CLONEVERTEX' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(103): warning C4091: 'static ': 変数が何も宣言されていないときは、'Game::stage' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(111): warning C4091: 'static ': 変数が何も宣言されていないときは、'Game::chara' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(128): warning C4091: 'static ': 変数が何も宣言されていないときは、'Game::CLONEVERTEX' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(212): warning C4091: 'static ': 変数が何も宣言されていないときは、'Game::block' の左辺を無視します。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(222): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+c:\users\yanoka\desktop\31\2\seisaku\numberblock\source\Game.h(227): warning C4018: '>=': signed と unsigned の数値を比較しようとしました。
+  コード生成しています。
+  1 of 1112 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  NumberBlock.vcxproj -> C:\Users\yanoka\Desktop\31\2\seisaku\NumberBlock\Release\NumberBlock.exe

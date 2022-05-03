@@ -1,0 +1,265 @@
+void Game::Update() {
+	//key
+	static int mmin;
+	float Dis=-1;
+	std::vector<int > hitlist;
+	std::vector<float > Dislist;
+	std::vector<float > mDislist;
+
+	if (debagflg == 0) {
+		ddt.SetChar("CPos(%.2f,%.2f,%.2f)\n", CPos);
+	ddt.SetChar("CLook(%.2f,%.2f,%.2f)\n", CLook);
+	ddt.SetChar("CHead(%.2f,%.2f,%.2f)\n", CHead);
+	if (GetAsyncKeyState('V') & 0x8000) {
+
+		ddt.SetChar("v.press");
+		
+	}
+		if (GetAsyncKeyState('C') & 0x8000) {
+
+			//D3DXMATRIX sRot;
+			//D3DXMatrixTranslation(&mStart, 0, -1.55, 1);
+			//D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(0), D3DXToRadian(45), D3DXToRadian(0));
+			//D3DXMATRIX mRot, mTrans;
+			//D3DXMatrixTranslation(&mTrans, 0, -2, 2);
+
+			//D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(90), D3DXToRadian(0));
+			//mEnd = mRot*mTrans;
+			//mStart = sRot*mStart;
+			//mNow = mStart;
+			//AnimeFrame = 0;
+			D3DXMATRIX mTmp,mTmpp;
+			D3DXMatrixTranslation(&mTmpp, 0.01, 0.01, 0.01);
+			D3DXMatrixRotationYawPitchRoll(&mTmp, D3DXToRadian(2), D3DXToRadian(1), D3DXToRadian(3));
+			meshinf[c.meshnum]->mWorld = mTmp*meshinf[c.meshnum]->mWorld;
+		}
+		if (GetAsyncKeyState('Z') & 0x8000) {
+			AnimeFrame += 0.01f;
+			if (AnimeFrame > 1) {
+				AnimeFrame = 1;
+			}
+			AnimeProc();
+			
+		}
+
+		if (GetAsyncKeyState('X') & 0x8000) {
+			AnimeFrame -= 0.01f;
+			if (AnimeFrame < 0) {
+				AnimeFrame = 0;
+			}
+			AnimeProc();
+
+		}
+		//meshinf[c.meshnum]->mWorld = mNow;
+		if (GetAsyncKeyState('I')) {
+			for (int i = 0; i < meshinf.size(); i++) {
+				delete meshinf[i];
+			}
+			meshinf.clear();
+
+			meshinf = fop.ReadFile(meshinf);
+			CM.SetPol(&polyinf);
+			CM.SetMat(&meshinf);
+			CM.init();
+		}
+		CM.Update(&CPos, &CLook, &CHead); 
+	
+		ddt.SetChar("meshinf.size%d\n",meshinf.size());
+
+		CLook = CLook - CPos  ;
+		//Mesh‚Ì“–‚½‚è”»’è
+		for (int i = 0; i < meshinf.size(); i++) {
+			D3DXMATRIX mInv;
+			D3DXMatrixInverse(&mInv, NULL, &meshinf[i]->mWorld);
+			D3DXVECTOR3 LocalPos, LocalVec;
+			D3DXVec3TransformCoord(&LocalPos, &CPos, &mInv);
+			D3DXVec3TransformNormal(&LocalVec, &CLook, &mInv);
+			BOOL Hit;
+			float WallDis = -1;
+			D3DXIntersect(meshinf[i]->xMesh.lpMesh, &LocalPos, &LocalVec, &Hit, NULL, NULL, NULL, &WallDis, NULL, NULL);
+			if (Hit) {
+
+			}else {
+			
+			}
+			mDislist.push_back(WallDis);
+		}
+	
+		CLook = CPos + CLook;
+		mmin = minDis(mDislist, mDislist.size());
+		ddt.SetChar("mmin %d", mmin);
+		ddt.SetChar("mDislist.size %u\n", mDislist.size());
+
+		if (mmin != -1) {
+			ddt.SetChar("x:%.2f", meshinf[mmin]->mWorld._41);
+			ddt.SetChar("y:%.2f", meshinf[mmin]->mWorld._42);
+			ddt.SetChar("z:%.2f\n", meshinf[mmin]->mWorld._43);
+			ddt.SetChar("name:%s", &meshinf[mmin]->mname);
+		}
+	}
+	if (GetAsyncKeyState(VK_SHIFT) & 0x8000) {
+		if (GetAsyncKeyState('1') & 0x8000) {
+			CPos = D3DXVECTOR3(0.0f, 5.0f, -13.0f);
+			CLook = D3DXVECTOR3(0.0f, -8.0f, 0.0f);
+			CHead = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+			debagflg = 1;
+			
+		}
+		if (GetAsyncKeyState('0') & 0x8000) {
+			debagflg = 0;
+		}
+	}
+	if (debagflg == 1) {
+		/*for (int i = 0; i < smax; i++) {
+			for (int j = 0; j < smax; j++) {
+				for (int k = 0; k < smax; k++) {
+					ddt.SetChar("%d ", s[i][j][k].meshnum);
+				}	
+				ddt.SetChar("\n");
+			}
+		ddt.SetChar("   ");
+		}*/
+		if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+			if (keyaniflg == 0) {
+				if (c.z < smax - 1) {
+					s[c.x][c.y][c.z].display = 0;
+					s[c.x][c.y][c.z].meshnum = -999;
+					//D3DXMATRIX sRot;
+					//D3DXMatrixTranslation(&mStart, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					//D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(keyaniroty), D3DXToRadian(keyanirotx), D3DXToRadian(keyanirotz));
+					//D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(0), D3DXToRadian(0), D3DXToRadian(0));
+					c.z += 1;
+					s[c.x][c.y][c.z].display = 1;
+					s[c.x][c.y][c.z].meshnum = c.meshnum;
+
+					D3DXMATRIX mRot, mTrans;
+					D3DXMatrixTranslation(&mTrans, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					//keyanirotx -= 90;
+					D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(-90), D3DXToRadian(0));
+					//D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(-90), D3DXToRadian(0));
+
+					mStart = meshinf[c.meshnum]->mWorld;
+					meshinf[c.meshnum]->SetPos(s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					meshinf[c.meshnum]->Update();
+					mEnd = mRot*meshinf[c.meshnum]->mWorld;
+					mNow = mStart;
+					AnimeFrame = 0;
+					keyaniflg = 1;
+				}
+			}
+		}
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+			if (keyaniflg == 0) {
+				if (c.x > 0) {
+					s[c.x][c.y][c.z].display = 0;
+					s[c.x][c.y][c.z].meshnum = -999;
+					D3DXMATRIX sRot;
+					D3DXMatrixTranslation(&mStart, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(keyaniroty), D3DXToRadian(keyanirotx), D3DXToRadian(keyanirotz));
+					//D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(0), D3DXToRadian(0), D3DXToRadian(0));
+					c.x -= 1;
+					s[c.x][c.y][c.z].display = 1;
+					s[c.x][c.y][c.z].meshnum = c.meshnum;
+		
+					D3DXMATRIX mRot, mTrans;
+					D3DXMatrixTranslation(&mTrans, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					if (c.z == 2) { keyanirotz -= 90; }
+					else if (c.z == 1) { keyanirotx += 0; keyanirotz -= 0; keyaniroty += 0; }
+					else if (c.z == 3) { keyanirotx += 0; keyanirotz += 90; keyaniroty += 0; }
+					else if (c.z == 4) { keyanirotx += 0; keyanirotz += 0; keyaniroty -= 90; }
+					else { keyanirotz -= 90; }
+					//keyanirotz -= 90;
+
+					D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(keyaniroty), D3DXToRadian(keyanirotx), D3DXToRadian(keyanirotz));
+					//D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(90), D3DXToRadian(0));
+					mEnd = mRot*mTrans;
+					mStart = sRot*mStart;
+					mNow = mStart;
+					AnimeFrame = 0;
+					keyaniflg = 1;
+
+				}
+			}
+		}
+		if (GetAsyncKeyState(VK_UP) & 0x8000) {
+			if (keyaniflg == 0) {
+				if (c.z > 0) {
+					s[c.x][c.y][c.z].display = 0;
+					s[c.x][c.y][c.z].meshnum = -999;
+
+					c.z -= 1;
+					s[c.x][c.y][c.z].display = 1;
+					s[c.x][c.y][c.z].meshnum = c.meshnum;
+					
+					
+					D3DXMATRIX mRot;
+			
+					D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(90), D3DXToRadian(0));
+
+					mStart = meshinf[c.meshnum]->mWorld;
+					meshinf[c.meshnum]->SetPos(s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					meshinf[c.meshnum]->Update();
+					mEnd = mRot*meshinf[c.meshnum]->mWorld;
+					mNow = mStart;
+					AnimeFrame = 0;
+					keyaniflg = 1;
+
+				}
+			}
+		}
+		if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+			if (keyaniflg == 0) {
+				if (c.x < smax - 1) {
+					s[c.x][c.y][c.z].display = 0;
+					s[c.x][c.y][c.z].meshnum = -999;
+					D3DXMATRIX sRot;
+					D3DXMatrixTranslation(&mStart, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(keyaniroty), D3DXToRadian(keyanirotx), D3DXToRadian(keyanirotz));
+					//D3DXMatrixRotationYawPitchRoll(&sRot, D3DXToRadian(0), D3DXToRadian(0), D3DXToRadian(0));
+					c.x += 1;
+					s[c.x][c.y][c.z].display = 1;
+					s[c.x][c.y][c.z].meshnum = c.meshnum;
+
+					D3DXMATRIX mRot, mTrans;
+					D3DXMatrixTranslation(&mTrans, s[c.x][c.y][c.z].xyz.x, s[c.x][c.y][c.z].xyz.y, s[c.x][c.y][c.z].xyz.z);
+					if (c.z == 2) { keyanirotz += 90; }
+					else if (c.z == 1) { keyanirotx	+= 0; keyanirotz += 0; keyaniroty += 0; }
+					else if (c.z == 3) { keyanirotx += 0; keyanirotz += -90; keyaniroty += 0; }
+					else { keyanirotz += 90; }
+					//keyanirotz += 90;
+
+					D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(keyaniroty), D3DXToRadian(keyanirotx), D3DXToRadian(keyanirotz));
+					//D3DXMatrixRotationYawPitchRoll(&mRot, D3DXToRadian(0), D3DXToRadian(90), D3DXToRadian(0));
+					mEnd = mRot*mTrans;
+					mStart = sRot*mStart;
+					mNow = mStart;
+					AnimeFrame = 0;
+					keyaniflg = 1;
+
+				}
+			}
+		}
+
+		if (keyaniflg == 1) {
+			AnimeFrame += 0.1f;
+			if (AnimeFrame > 1) {
+				AnimeFrame = 1;
+				keyaniflg = 0;
+				meshinf[c.meshnum]->SetPos(s[c.x][c.y][c.z].xyz);
+				meshinf[c.meshnum]->Update();
+				//D3DXMatrixIdentity(&mRot);
+				
+			}
+			AnimeProc();
+			meshinf[c.meshnum]->mWorld = mNow;
+		}
+		ddt.SetChar("keyanirotx:%.2f\n", keyanirotx);
+		ddt.SetChar("keyaniroty:%.2f\n",keyaniroty);
+		ddt.SetChar("keyanirotz:%.2f\n", keyanirotz);
+
+		ddt.SetChar("c.x:%d\n", c.x);
+		ddt.SetChar("c.y:%d\n", c.y);
+		ddt.SetChar("c.z:%d\n", c.z);
+
+	}
+}
